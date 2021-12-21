@@ -19,18 +19,19 @@ class ConductoresController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->_docu_empre = 11222333;
     }
 
     public function index(Request $request)
     {
-        return new Home($request); 
+        return new Home($request);
     }
 
     public function actualizar(Request $request)
     {
         return new Actualizar($request);
     }
-    
+
     public function buscar(Request $request)
     {
         return new Buscar($request);
@@ -42,15 +43,15 @@ class ConductoresController extends Controller
     }
 
     public function filtrar(Request $request)
-    {    
+    {
         return new Filtrar($request);
     }
 
     public function guardar(Request $request)
     {
-        return new Guardar($request);
+        return new Guardar($request, $this->_docu_empre);
     }
-    
+
     public function listar(Request $request)
     {
         return new Listar($request);
