@@ -13,18 +13,19 @@ use App\Modelos\DBLatinsoft\Contacto;
 
 class Guardar implements Responsable
 {
-    protected $_docu_empre = '96711420';
+    protected $_docu_empre;
 
-    public function __construct()
+    public function __construct($request, $docu_empre)
     {
+        $this->_docu_empre = $docu_empre;
     }
 
     public function toResponse($request)
     {
-        if(!$this->_existeConductor($request->toArray())){
+        if (!$this->_existeConductor($request->toArray())) {
             Conductor::create($request->toArray());
             Licencia::create($request->toArray());
-            if(!$this->_existePersona($request->toArray())){
+            if (!$this->_existePersona($request->toArray())) {
                 Domicilio::create($request->toArray());
                 Contacto::create($request->toArray());
                 Persona::create($request->toArray());
@@ -43,16 +44,13 @@ class Guardar implements Responsable
     }
 
     /*--------------------------------------------------------------------------------------*/
-    private function _existeConductor($obj)
+    public function _existeConductor($obj)
     {
         $existe = false;
         $docu_perso = $obj['docu_perso'];
         $docu_empre = $this->_docu_empre;
-        $conductor = Conductor::where('docu_perso', $docu_perso)
-            ->where('docu_empre', $docu_empre)
-            ->limit(1)
-            ->get();
-        if($conductor->count() > 0){
+        $conductor = Conductor::where('docu_empre', $docu_empre)->where('docu_perso', $docu_perso)->get();
+        if ($conductor->count() > 0) {
             $existe = true;
         }
         return $existe;
@@ -63,7 +61,7 @@ class Guardar implements Responsable
         $existe = false;
         $docu_perso = $obj['docu_perso'];
         $conductor = Persona::_buscar($docu_perso);
-        if($conductor->count() > 0){
+        if ($conductor->count() > 0) {
             $existe = true;
         }
         return $existe;

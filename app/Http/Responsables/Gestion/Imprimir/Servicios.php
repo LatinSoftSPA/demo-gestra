@@ -30,7 +30,7 @@ class Servicios implements Responsable
 	}
 
 
-	private function _imprimirServicio($docu_empre, $codi_circu, $codi_servi)
+	public function _imprimirServicio($docu_empre, $codi_circu, $codi_servi)
 	{
 		$servicio = ViewServicios::_buscar($docu_empre, $codi_circu, $codi_servi);
 		if ($servicio['total'] > 0) {

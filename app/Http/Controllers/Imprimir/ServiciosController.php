@@ -17,7 +17,8 @@ class ServiciosController extends ConfiguracionController
 	private $ahorro_papel = false;
 	private $letra_pequena = true;
 
-	private $_urlQR = "http://gestra.latinsoft.cl/api/conductores/servicio/";
+	// private $_urlQR = "http://gestra.latinsoft.cl/api/conductores/servicio/";
+	private $_urlQR = "http://190.164.82.121/gestra/api/conductores/servicio/";
 	//private $testStr = 'Nombre\Apellidos\DNI';
 	//private $footer = EscposImage::load(public_path('assets\img\conductores.png'));
 

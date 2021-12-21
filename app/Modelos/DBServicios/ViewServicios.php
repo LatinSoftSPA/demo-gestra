@@ -23,6 +23,7 @@ class ViewServicios extends Configuracion
             $total = $servicio->count();
 
             $servicio = $servicio->toArray();
+		
             $controladas    = viewProgramasXControlar::_listar($e, $c, $s);
             $expediciones   = ViewExpediciones::_listar($c, $s);
             $multas         = ViewMultasRecaudadas::_listar($c, $s);

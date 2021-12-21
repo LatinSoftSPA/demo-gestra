@@ -18,7 +18,7 @@ use Carbon\Carbon;
 
 class ProcesarServicios implements Responsable
 {
-    protected $_imprimir = false;
+    protected $_imprimir;
     protected $_codi_circu;
     protected $_codi_equip;
     protected $_codi_servi;
@@ -27,9 +27,10 @@ class ProcesarServicios implements Responsable
     protected $_docu_empre;
     protected $_valor_multa;
 
-    public function __construct($request, $docu_empre)
+    public function __construct($request, $docu_empre, $imprimir = false)
     {
         $this->_docu_empre = $docu_empre;
+        $this->_imprimir = $imprimir;
         $this->_valor_multa = 1000;
         $this->_codi_circu = $request->codi_circu;
         $this->_codi_equip = $request->codi_equip;
@@ -60,7 +61,7 @@ class ProcesarServicios implements Responsable
     }
 
 
-    public function _listarMarcadas($controladas)
+    private function _listarMarcadas($controladas)
     {
         $listado = [];
         foreach ($controladas as $controlar) {
@@ -96,7 +97,7 @@ class ProcesarServicios implements Responsable
         return $listado;
     }
 
-    public function _getMulta($minu_toler, $fech_progr, $fech_contr)
+    private function _getMulta($minu_toler, $fech_progr, $fech_contr)
     {
         $diferencia = floor(($fech_contr - strtotime($fech_progr)) / 60);
 
@@ -117,60 +118,9 @@ class ProcesarServicios implements Responsable
         return $multa;
     }
 
-    public function _procesarExpediciones($servicio, $expediciones)
-    {
-        $codi_equip = $servicio['codi_equip'];
-
-        var_dump($codi_equip);
-        $listado = $this->_listarArribos($expediciones, $codi_equip);
-        foreach ($listado as $lista) {
-            $codi_senti = $lista['sentido'];
-            $controladas = $lista['arribos'];
-            $this->_procesarProgramadas($servicio, $controladas, $codi_senti);
-        }
-    }
-
-    public function _listarArribos($expediciones, $codi_equip)
-    {
-        $listado = null;
-        foreach ($expediciones as $expedicion) {
-            $desde = $this->_desde($expedicion['inic_exped']);
-            $hasta = $this->_hasta($expedicion['term_exped']);
-
-            $arribos = ViewArribos::_listar($codi_equip, $desde, $hasta);
-            if ($arribos->count() > 0) {
-                $listado[$expedicion['codi_senti']] =
-                    [
-                        'sentido' => $expedicion['codi_senti'],
-                        'arribos' => $arribos->toArray()
-                    ];
-            }
-        }
-        return $listado;
-    }
-
-    public function _procesarProgramadas($servicio, $controladas, $codi_senti)
-    {
-        $programadas = new ProgramadasController;
-        $programadas->procesarProgramadas($servicio, $controladas, $codi_senti);
-    }
     /*------------------------------------------------------------------------------------------------------------------------------*/
-
-    private function _desde($fecha)
-    {
-        $desde = strtotime('-10 minutes', strtotime($fecha));
-        return $desde;
-    }
-
-    private function _hasta($fecha)
-    {
-        $hasta = strtotime('+40 minutes', strtotime($fecha));
-        return $hasta;
-    }
-
     private function _imprimirInforme($docu_empre, $codi_circu, $codi_servi)
     {
-
         $servicio = ViewServicios::_buscar($docu_empre, $codi_circu, $codi_servi);
         if ($servicio['total'] > 0) {
             $mi_servicio = $servicio;
