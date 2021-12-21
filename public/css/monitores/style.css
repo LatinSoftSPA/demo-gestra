@@ -1,0 +1,97 @@
+body {
+  background: #999;
+  padding: 100px;
+  color: #000;
+  font-family: arial;
+}
+  
+div.background {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;  
+  background: url(http://archivos.latinsoft.cl/imagenes/001.jpg) no-repeat center center fixed;
+  border: 2px solid black;
+  background-size: cover;
+  
+  /*-webkit-filter: blur(3px);    */
+}
+div.boxHora, div.boxTitulo, div.boxServicios {
+  margin: 5px;
+
+}
+div.boxHora{
+  background-color: #033;
+  border: 1px solid black;
+  opacity: 0.95;
+  /*filter: alpha(opacity=80); /* For IE8 and earlier */
+}
+
+div.boxHora h1{
+  margin: 1%;
+  color: #fff;
+  text-align: center;
+}
+
+div.boxHora h1.txtHora{
+  font-size: 4.5em;
+  font-weight: bold;/**/
+}
+
+div.transbox {
+  background-color: #999;
+  border: 1px solid black;
+  opacity: 0.6;
+  filter: alpha(opacity=60); /* For IE8 and earlier */
+}
+
+div.boxTitulo {
+  background-color: rgb(129, 38, 2);
+  border: 1px solid black;
+  opacity: 0.9;
+  filter: alpha(opacity=60); /* For IE8 and earlier */
+}
+
+div.boxTitulo p {
+  margin: 1%;
+  font-weight: bold;
+  color: #fff;
+}
+
+
+div.boxServicios {
+  background-color: rgb(2, 61, 43);
+  border: 1px solid black;
+  opacity: 0.9;
+  filter: alpha(opacity=60); /* For IE8 and earlier */
+}
+
+div.boxServicios {
+  color: #fff;
+}
+  
+
+div.boxServicios 
+{ 
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#capaMapa
+{
+  width: 100%;
+  height: 100%;
+}
+
+#divGMap 
+{ 
+  width: 100%;
+  height: 100%;
+  /*
+  margin: 0;
+  padding: 0;
+  */
+}
+

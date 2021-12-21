@@ -2,10 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
-use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -15,8 +13,33 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        Registered::class => [
-            SendEmailVerificationNotification::class,
+        'Illuminate\Auth\Events\Login' => [
+            'App\Listeners\LoginListener',
+        ],
+        'Illuminate\Auth\Events\Logout' => [
+            'App\Listeners\LogoutListener',
+        ],
+        //LISTENER DE LOS SERVICIOS
+        'App\Events\Servicios\Analizar' => [
+            'App\Listeners\Servicios\AnalizarListener',
+        ],
+
+
+
+
+        
+        'App\Events\Servicios\Iniciados' => [
+            'App\Listeners\Servicios\IniciadosListener',
+        ],
+        'App\Events\Servicios\Finalizados' => [
+            'App\Listeners\Servicios\FinalizadosListener',
+        ],
+        'App\Events\Servicios\Procesar' => [
+            'App\Listeners\Servicios\ProcesarListener',
+        ],
+        //LISTENER PARA IMPRIMIR
+        'App\Events\Servicios\Imprimir' => [
+            'App\Listeners\Servicios\ImprimirListener',
         ],
     ];
 
@@ -27,6 +50,8 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        parent::boot();
+
         //
     }
 }
