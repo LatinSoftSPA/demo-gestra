@@ -31,9 +31,10 @@ $(document).ready(function(){
 		    var nume_movil = $(this).data('nume_movil');
 		    var pate_movil = $(this).data('pate_movil');
 		    var codi_equip = $(this).data('codi_equip');
+			var impr_infor = $('#impr_infor').prop("checked");
 		    
 	    	setTimeout(function(){
-	    		var procesado = procesarServicio(codi_circu, nume_movil, pate_movil, codi_equip, codi_servi);
+	    		var procesado = procesarServicio(codi_circu, nume_movil, pate_movil, codi_equip, codi_servi, impr_infor);
 	    		procesado.done(function(data, textStatus, jqXHR){
 	    			$(this).fadeOut();
 					$('#btnProcesar').prop('disabled', true);
@@ -43,11 +44,11 @@ $(document).ready(function(){
 	});
 });
 
-function procesarServicio(codi_circu, nume_movil, pate_movil, codi_equip, codi_servi)
+function procesarServicio(codi_circu, nume_movil, pate_movil, codi_equip, codi_servi, impr_infor)
 {
 	var url = 'servicios/procesar';
 
-	var parametros = {'codi_circu' : codi_circu, 'nume_movil' : nume_movil, 'pate_movil' : pate_movil, 'codi_equip' : codi_equip, 'codi_servi' : codi_servi};
+	var parametros = {'codi_circu' : codi_circu, 'nume_movil' : nume_movil, 'pate_movil' : pate_movil, 'codi_equip' : codi_equip, 'codi_servi' : codi_servi, 'impr_infor' : impr_infor};
 	var token = document.getElementsByName('_token');
 	return $.ajax({
       url: url,

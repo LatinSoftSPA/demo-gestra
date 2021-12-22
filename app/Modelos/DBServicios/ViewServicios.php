@@ -12,28 +12,25 @@ class ViewServicios extends Configuracion
 {
     protected $table = 'viewServicios';
 
-    public static function _buscar($e, $c, $s)
+    public static function _buscar($docu_empre, $codi_circu, $codi_servi)
     {
         try {
-            $servicio = ViewServicios::where('codi_servi', $s)
-                ->where('codi_circu', $c)
-                ->where('docu_empre', $e)
+            $servicio = ViewServicios::where('docu_empre', $docu_empre)
+                ->where('codi_circu', $codi_circu)
+                ->where('codi_servi', $codi_servi)
                 ->limit(1)
                 ->get();
-            $total = $servicio->count();
-
             $servicio = $servicio->toArray();
-		
-            $controladas    = viewProgramasXControlar::_listar($e, $c, $s);
-            $expediciones   = ViewExpediciones::_listar($c, $s);
-            $multas         = ViewMultasRecaudadas::_listar($c, $s);
 
+            $expediciones   = ViewExpediciones::_listar($codi_circu, $codi_servi);
+            $multas         = ViewMultasRecaudadas::_listar($codi_circu, $codi_servi);
+            $controladas    = viewProgramasXControlar::_listar($docu_empre, $codi_circu, $codi_servi);
             return [
                 'servicio'      => $servicio[0],
                 'controladas'   => $controladas,
                 'expediciones'  => $expediciones,
                 'multas'        => $multas,
-                'total'         => $total
+                'total'         => $servicio->count()
             ];
         } catch (\Exception $e) {
             return response('Error de Comunicacion en el Servidor!!!', 500);

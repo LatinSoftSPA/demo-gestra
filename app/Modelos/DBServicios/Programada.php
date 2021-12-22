@@ -29,58 +29,47 @@ class Programada extends Model
         }
     }
 
-    public static function _actualizarProgramada($s, $c, $e, $g, $f, $lat, $lon, $h, $v, $d, $t, $m)
+    public static function _actualizarProgramada($codi_servi, $codi_circu, $codi_senti, $codi_geoce, $fech_contr, $latitud, $longitud, $angulo, $velo_contr, $dife_contro, $tota_multa, $multado)
     {
-        $fech_contr = Carbon::createFromTimestamp($f)->toDateTimeString();
-        \DB::beginTransaction();
-        try {
-            $programada = Programada::where('codi_servi', $s)
-                ->where('codi_circu', $c)
-                ->where('codi_senti', $e)
-                ->where('procesado', false)
-                ->where('codi_geoce', $g);
-            $programada->update(
-                [
-                    'fech_contr' => $fech_contr,
-                    'latitud'    => $lat,
-                    'longitud'   => $lon,
-                    'angulo' => $h,
-                    'velo_contr' => intval($v),
-                    'dife_contro' => intval($d),
-                    'tota_multa' => $t,
-                    'procesado'  => true,
-                    'multado'    => $m
-                ]
-            );
-        } catch (\Exception $e) {
-            \DB::rollback();
-            return response('Algo salio mal...!!!', 500);
-        }
-        \DB::commit();
+        $programada = Programada::where('codi_servi', $codi_servi)
+        ->where('codi_circu', $codi_circu)
+        ->where('codi_senti', $codi_senti)
+        ->where('codi_geoce', $codi_geoce)
+        ->where('procesado', false);
+        $programada->update([
+            'fech_contr' => $fech_contr,
+            'latitud'    => $latitud,
+            'longitud'   => $longitud,
+            'angulo' => $angulo,
+            'velo_contr' => $velo_contr,
+            'dife_contro' => $dife_contro,
+            'tota_multa' => $tota_multa,
+            'multado'    => $multado,
+            'procesado'  => true
+        ]);
     }
 
-
-    public static function _actualizarProgramadas($listado)
+    public static function _actualizarListadoProgramadas($listado)
     {
         \DB::beginTransaction();
-        try {
-            foreach ($listado as $marcada) {
-                $programada = Programada::where('codi_servi', $marcada['codi_servi'])
-                    ->where('codi_circu', $marcada['codi_circu'])
-                    ->where('procesado', false)
-                    ->where('codi_senti', $marcada['codi_senti'])
-                    ->where('codi_geoce', $marcada['codi_geoce']);
-                $programada->update([
-                    'fech_contr' => $marcada['fech_contr'],
-                    'latitud'    => $marcada['lati_marca'],
-                    'longitud'   => $marcada['long_marca'],
-                    'angulo' => $marcada['angulo'],
-                    'velo_contr' => $marcada['velo_contr'],
-                    'dife_contro' => $marcada['dife_contro'],
-                    'tota_multa' => $marcada['tota_multa'],
-                    'procesado'  => true,
-                    'multado'    => $marcada['multado']
-                ]);
+        try 
+        {
+            foreach ($listado as $marcada)
+            {                
+                $codi_servi = $marcada['codi_servi'];
+                $codi_circu = $marcada['codi_circu'];
+                $codi_senti = $marcada['codi_senti'];
+                $codi_geoce = $marcada['codi_geoce'];
+                $fech_contr = $marcada['fech_contr'];
+                $latitud = $marcada['lati_marca'];
+                $longitud = $marcada['long_marca'];
+                $angulo = $marcada['angulo'];
+                $velo_contr = $marcada['velo_contr'];
+                $dife_contro = $marcada['dife_contro'];
+                $tota_multa = $marcada['tota_multa'];
+                $multado = $marcada['multado'];
+                //print_r([$codi_servi, $codi_circu, $codi_senti, $codi_geoce, $fech_contr, $latitud, $longitud, $angulo, $velo_contr, $dife_contro, $tota_multa, $multado]);
+                Programada::_actualizarProgramada($codi_servi, $codi_circu, $codi_senti, $codi_geoce, $fech_contr, $latitud, $longitud, $angulo, $velo_contr, $dife_contro, $tota_multa, $multado);
             }
         } catch (\Exception $e) {
             \DB::rollback();

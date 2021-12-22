@@ -10,11 +10,15 @@ class ViewProgramasXControlar extends Configuracion
 
     public static function _listar($docu_empre, $codi_circu, $codi_servi)
     {
-        $listado = ViewProgramasXControlar::where('docu_empre', $docu_empre)
-            ->where('codi_circu', $codi_circu)
-            ->where('codi_servi', $codi_servi)
-            ->get();
+        try {
+            $listado = ViewProgramasXControlar::where('docu_empre', $docu_empre)
+                ->where('codi_circu', $codi_circu)
+                ->where('codi_servi', $codi_servi)
+                ->get();
 
-        return $listado->toArray();
+            return $listado->toArray();
+        } catch (\Exception $e) {
+            return response('Error de Comunicacion en el Servidor!!!', 500);
+        }
     }
 }

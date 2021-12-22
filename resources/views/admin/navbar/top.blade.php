@@ -21,13 +21,6 @@
       <ul class="nav navbar-nav">
         <!-- Messages: style can be found in dropdown.less-->
         <li class="dropdown messages-menu">
-          <!-- Menu toggle button -->
-          <!--
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-envelope-o"></i>
-            <span class="label label-success">4</span>
-          </a>
-          -->
           <ul class="dropdown-menu">
             <li>
               <!-- inner menu: contains the messages -->
@@ -60,31 +53,6 @@
             <li class="footer"><a href="#">See All Messages</a></li>
           </ul>
         </li>
-        <!-- /.messages-menu -->
-
-        <!-- Notifications Menu -->
-        <!--
-        <li class="dropdown notifications-menu">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-bell-o"></i>
-            <span class="label label-warning">10</span>
-          </a>
-          <ul class="dropdown-menu">
-            <li class="header">You have 10 notifications</li>
-            <li>
-              <ul class="menu">
-                <li>
-                  <a href="#">
-                    <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="footer"><a href="#">View all</a></li>
-          </ul>
-        </li>
-        -->
-        <!-- Tasks Menu -->
         <li class="dropdown tasks-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <i class="fa fa-tasks"></i>
@@ -96,6 +64,10 @@
                 <li id="tareasProcesar">
 
                 </li>
+                <div>
+				            {{ Form::checkbox('impr_infor', 'value', true, ['class' => '', 'id' => 'impr_infor']) }}
+				            {{ Form::label('impr_infor', 'Imprimir', ['class' => 'control-label']) }}</div>
+
                 <button type="button" class="btn btn-warning btn-block" id="btnProcesar" disabled="disabled"><span class="glyphicon glyphicon-retweet" aria-hidden="true"></span> Procesar</button>
               </ul>
             </li>

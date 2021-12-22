@@ -87,9 +87,4 @@ class MultasController extends Controller
             \DB::commit();
         }
     }
-
-    public function definirMulta()
-    {
-
-    }
 }

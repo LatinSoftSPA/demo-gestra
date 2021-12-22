@@ -13,14 +13,7 @@ class ViewMultasRecaudadas extends Model
         $multas = ViewMultasRecaudadas::where('codi_circu', $codi_circu)
             ->where('codi_servi', $codi_servi)
             ->get();
-        
-        return $multas;
 
-        /*
-        return [
-            'multas' => $multas->toArray(),
-            'total' => $multas->count()
-        ];
-        */
+        return $multas->toArray();
     }
 }

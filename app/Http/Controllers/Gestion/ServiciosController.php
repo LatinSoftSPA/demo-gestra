@@ -78,8 +78,7 @@ class ServiciosController extends Controller
     /*--------------------------------------------------*/
     public function procesarServicio(Request $request)
     {
-        $imprimir = false;
-        return new ProcesarServicios($request, $this->_docu_empre, $imprimir);
+        return new ProcesarServicios($request, $this->_docu_empre);
     }
     /*--------------------------------------------------*/
     public function cobrarMulta(Request $request)
